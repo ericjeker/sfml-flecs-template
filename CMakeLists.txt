@@ -3,6 +3,7 @@ project(CMakeSFMLProject LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 17)
 
 message("--- Fetching Content")
 include(FetchContent)
@@ -24,5 +25,4 @@ FetchContent_MakeAvailable(flecs)
 
 message("--- Adding Executable")
 add_executable(main src/main.cpp)
-target_compile_features(main PRIVATE cxx_std_26)
-target_link_libraries(main PRIVATE flecs SFML::Graphics)
+target_link_libraries(main PRIVATE flecs SFML::Window SFML::Graphics)
