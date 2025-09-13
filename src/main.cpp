@@ -1,5 +1,4 @@
 #include <flecs.h>
-#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -7,17 +6,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/WindowEnums.hpp>
-#include <flecs/addons/cpp/mixins/pipeline/decl.hpp>
 
-struct CircleRenderable {
-  sf::CircleShape shape = sf::CircleShape(100.f, 3);
-};
-
-struct Transform {
-  sf::Vector2f position;
-  sf::Vector2f scale = {1.f, 1.f};
-  float rotation = 0.f;
-};
+#include "core/components/CircleRenderable.h"
+#include "core/components/Transform.h"
 
 int main() {
   sf::ContextSettings settings;
@@ -28,7 +19,7 @@ int main() {
   window.setFramerateLimit(144);
 
   // the unique flecs world
-  const auto world = flecs::world();
+  const flecs::world world;
 
   // circle with 100-pixel radius, green fill
   auto triangle = world.entity().set<CircleRenderable>({}).set<Transform>({{1920 / 2.f, 1080 / 2.f}});
@@ -36,9 +27,9 @@ int main() {
   shape.setFillColor(sf::Color::Green);
   shape.setOrigin({100.f, 100.f});
 
-  // add our systems to the world
+  // add our systems to the world, rotator and renderer
   world.system<Transform>().each(
-      [](const flecs::iter& it, size_t, Transform& t) { t.rotation += 90.f * it.delta_time(); });
+      [](const flecs::iter& it, size_t, Transform& t) { t.rotation += 180.f * it.delta_time(); });
 
   world.system<CircleRenderable, const Transform>()
       .kind(flecs::OnStore)
