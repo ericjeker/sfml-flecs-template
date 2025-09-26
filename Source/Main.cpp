@@ -7,8 +7,8 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/WindowEnums.hpp>
 
-#include "core/components/CircleRenderable.h"
-#include "core/components/Transform.h"
+#include "Core/Components/CircleRenderable.h"
+#include "Core/Components/Transform.h"
 
 int main() {
   sf::ContextSettings settings;

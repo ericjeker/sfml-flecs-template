@@ -1,5 +1,5 @@
 # Ignore FetchContent clones
-**/build/_deps
+**/Build/_deps
 
 # IDEs
 .idea
@@ -8,6 +8,6 @@
 .cache
 
 # Build
-install
-build
-out
+Install
+Build
+Out
