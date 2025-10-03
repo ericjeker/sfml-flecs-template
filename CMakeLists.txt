@@ -1,16 +1,21 @@
-cmake_minimum_required(VERSION 3.31)
-project(CMakeSFMLProject LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.31..4.1)
+project(SFMLFlecsProject LANGUAGES CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-message("--- Adding Include")
-add_subdirectory(Core)
+# --- Sub-Directories ---
 add_subdirectory(Vendor)
-add_subdirectory(Source)
+add_subdirectory(Core)
+add_subdirectory(Main)
 
-if(ENABLE_TESTS)
-    enable_testing()
-    add_subdirectory(Tests)
-endif()
+# --- Installation ---
+install(TARGETS Main
+        EXPORT Main
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/test
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)

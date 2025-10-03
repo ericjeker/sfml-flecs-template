@@ -1,5 +1,4 @@
 #include <flecs.h>
-#include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Angle.hpp>
@@ -7,22 +6,22 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/WindowEnums.hpp>
 
-#include "Core/Components/CircleRenderable.h"
-#include "Core/Components/Transform.h"
+#include "SFE/Modules/Render/Components/CircleRenderable.h"
+#include "SFE/Modules/Render/Components/Transform.h"
 
 int main() {
   sf::ContextSettings settings;
   settings.antiAliasingLevel = 4;
 
   auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project", sf::Style::None,
-                                 sf::State::Fullscreen, settings);
+                                 sf::State::Windowed, settings);
   window.setFramerateLimit(144);
 
   // the unique flecs world
   const flecs::world world;
 
   // circle with 100-pixel radius, green fill
-  auto triangle = world.entity().set<CircleRenderable>({}).set<Transform>({{1920 / 2.f, 1080 / 2.f}});
+  const auto triangle = world.entity().set<CircleRenderable>({}).set<Transform>({.position = {1920 / 2.f, 1080 / 2.f}});
   auto& shape = triangle.get_mut<CircleRenderable>().shape;
   shape.setFillColor(sf::Color::Green);
   shape.setOrigin({100.f, 100.f});
